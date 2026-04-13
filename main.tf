@@ -15,7 +15,7 @@ resource "aws_vpc" "default" {
   cidr_block           = var.vpc_cidr
   enable_dns_hostnames = true
   tags = {
-    Name  = "${var.vpc_name}"
+    Name = "${var.vpc_name}"
   }
 }
 
@@ -36,26 +36,26 @@ resource "aws_subnet" "subnet1-public" {
   }
 }
 
-resource "aws_subnet" "subnet2-public" {
-  vpc_id            = aws_vpc.default.id
-  cidr_block        = var.public_subnet2_cidr
-  availability_zone = "us-east-1b"
+# resource "aws_subnet" "subnet2-public" {
+#   vpc_id            = aws_vpc.default.id
+#   cidr_block        = var.public_subnet2_cidr
+#   availability_zone = "us-east-1b"
 
-  tags = {
-    Name = "${var.public_subnet2_name}"
-  }
-}
+#   tags = {
+#     Name = "${var.public_subnet2_name}"
+#   }
+# }
 
-resource "aws_subnet" "subnet3-public" {
-  vpc_id            = aws_vpc.default.id
-  cidr_block        = var.public_subnet3_cidr
-  availability_zone = "us-east-1c"
+# resource "aws_subnet" "subnet3-public" {
+#   vpc_id            = aws_vpc.default.id
+#   cidr_block        = var.public_subnet3_cidr
+#   availability_zone = "us-east-1c"
 
-  tags = {
-    Name = "${var.public_subnet3_name}"
-  }
+#   tags = {
+#     Name = "${var.public_subnet3_name}"
+#   }
 
-}
+# }
 
 resource "aws_route_table" "terraform-public" {
   vpc_id = aws_vpc.default.id
@@ -97,22 +97,20 @@ resource "aws_security_group" "allow_all" {
 
 
 resource "aws_instance" "test-server" {
-     ami = "ami-0ec10929233384c7f"
-    availability_zone = "us-east-1a"
-    instance_type = "t2.micro"
-    key_name = "testkey"
-    subnet_id = "${aws_subnet.subnet1-public.id}"
-    vpc_security_group_ids = ["${aws_security_group.allow_all.id}"]
-    associate_public_ip_address = true	
-    tags = {
-        Name = "test-server"
-    }
-     user_data = <<- EOF
-     #!/bin/bash
-     	sudo apt-get update
-      sudo apt install net-tools -y
-      curl https://get.docker.com | bash
-     EOF
+  ami                         = "ami-0ec10929233384c7f"
+  availability_zone           = "us-east-1a"
+  instance_type               = "t2.micro"
+  key_name                    = "testkey"
+  subnet_id                   = aws_subnet.subnet1-public.id
+  vpc_security_group_ids      = ["${aws_security_group.allow_all.id}"]
+  associate_public_ip_address = true
+  tags = {
+    Name = "test-server"
   }
- }
+  user_data = <<-EOF
+  #!/bin/bash
+  sudo apt-get update
+  sudo apt install net-tools -y
+  curl https://get.docker.com | bash
+  EOF
 }
