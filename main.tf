@@ -101,5 +101,7 @@ resource "aws_instance" "test-server" {
   sudo apt-get update
   sudo apt install net-tools -y
   curl https://get.docker.com | bash
+  sudo usermod -aG docker ubuntu
+  sudo systemctl restart docker.service
   EOF
 }
