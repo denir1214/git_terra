@@ -14,3 +14,4 @@ Main_Routing_Table = "Terraform_Main_table-main"
 key_name           = "testkey"
 environment        = "main"
 env                = "main"
+azs = ["us-east-1a", "us-east-1b", "us-east-1c"]
