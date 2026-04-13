@@ -4,8 +4,8 @@ provider "aws" {
 
 terraform {
   backend "s3" {
-    bucket = "workspacesbucket01"
-    key    = "workspace.statefile"
+    bucket = "terra-testing1412"
+    key    = "base-infra.tfstate"
     region = "us-east-1"
   }
 }
@@ -97,7 +97,7 @@ resource "aws_security_group" "allow_all" {
 
 
 resource "aws_instance" "test-server" {
-     ami = "ami-0d857ff0f5fc4e03b"
+     ami = "ami-0ec10929233384c7f"
     availability_zone = "us-east-1a"
     instance_type = "t2.micro"
     key_name = "testkey"
