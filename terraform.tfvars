@@ -12,6 +12,4 @@ public_subnet3_name = "Terraform_Public_Subnet3-main"
 # private_subnet_name = "Terraform_Private_Subnet-main"
 Main_Routing_Table = "Terraform_Main_table-main"
 key_name           = "testkey"
-environment        = "main"
-env                = "main"
 azs = ["us-east-1a", "us-east-1b", "us-east-1c"]
